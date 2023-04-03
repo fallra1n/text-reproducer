@@ -13,9 +13,7 @@ class Session:
         self.engine.setProperty('volume', 0.8)
 
     def Play(self, text):
-        text_without = ''.join([char for char in text if char != 'f'])
-
-        words = text_without.split()
+        words = text.split()
         for word in words:
             if not is_running:
                 break
