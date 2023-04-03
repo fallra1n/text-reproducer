@@ -1,10 +1,13 @@
 from back.session import Session
 
 
-def Run():
+def Run(file_path):
+    target = open(file_path, 'r')
+    text = target.readlines()
+
     a = Session()
-    a.Play("hello world")
+    a.Play(text)
 
 
 if __name__ == '__main__':
-    Run()
+    raise Exception("неправильное использование библиотеки")

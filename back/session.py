@@ -1,5 +1,7 @@
 import pyttsx3
 
+is_running = True
+
 
 class Session:
     engine = pyttsx3.Engine
@@ -11,5 +13,12 @@ class Session:
         self.engine.setProperty('volume', 0.8)
 
     def Play(self, text):
-        self.engine.say(text)
-        self.engine.runAndWait()
+        text_without = ''.join([char for char in text if char != 'f'])
+
+        words = text_without.split()
+        for word in words:
+            if not is_running:
+                break
+
+            self.engine.say(word)
+            self.engine.runAndWait()
