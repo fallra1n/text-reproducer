@@ -10,7 +10,7 @@ class Session:
         self.engine = pyttsx3.init()
 
         self.engine.setProperty('rate', 100)
-        self.engine.setProperty('volume', 0.8)
+        self.engine.setProperty('volume', 1.0)
 
     def Play(self, text):
         for string in text:
