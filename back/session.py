@@ -13,10 +13,12 @@ class Session:
         self.engine.setProperty('volume', 0.8)
 
     def Play(self, text):
-        words = text.split()
-        for word in words:
-            if not is_running:
-                break
+        for string in text:
+            words = string.split()
 
-            self.engine.say(word)
-            self.engine.runAndWait()
+            for word in words:
+                if not is_running:
+                    break
+
+                self.engine.say(word)
+                self.engine.runAndWait()
