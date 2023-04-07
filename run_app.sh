@@ -1,0 +1,1 @@
+cd app-gui && python3 main.py
