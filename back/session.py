@@ -1,6 +1,9 @@
 import pyttsx3
+import threading
 
 is_running = True
+is_paused = False
+mutex = threading.Lock()
 
 
 class Session:
@@ -9,16 +12,21 @@ class Session:
     def __init__(self):
         self.engine = pyttsx3.init()
 
-        self.engine.setProperty('rate', 100)
+        self.engine.setProperty('rate', 120)
         self.engine.setProperty('volume', 1.0)
 
-    def Play(self, text):
+    def Play(self, text: list, paused_cv: threading.Condition) -> None:
         for string in text:
             words = string.split()
 
             for word in words:
+                if is_paused:
+                    with paused_cv:
+                        paused_cv.wait()
+
                 if not is_running:
-                    break
+                    mutex.release()
+                    return
 
                 self.engine.say(word)
                 self.engine.runAndWait()
