@@ -93,7 +93,8 @@ class App:
         self.initCV()
         self.win.mainloop()
 
-        # Если была пауза, а после остановка(приложения), нам нужно завершить поток
+        # Если была пауза, а после остановка(приложения), нам нужно завершить
+        # поток
         if back.session.is_paused:
             back.session.mutex.acquire()
             back.session.is_running = False
