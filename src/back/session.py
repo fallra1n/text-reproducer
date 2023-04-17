@@ -15,7 +15,7 @@ class Session:
         self.engine.setProperty('rate', 120)
         self.engine.setProperty('volume', 1.0)
 
-    def Play(self, text: list, paused_cv: threading.Condition) -> None:
+    def play(self, text: list, paused_cv: threading.Condition) -> None:
         for string in text:
             words = string.split()
 

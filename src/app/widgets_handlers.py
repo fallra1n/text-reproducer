@@ -54,5 +54,5 @@ def pause_playing() -> None:
 def get_path_to_images() -> str:
     current_dir = os.getcwd()
     parent_dir = os.path.dirname(current_dir)
-    images = os.path.join(parent_dir, 'images')
+    images = os.path.join(parent_dir, 'images/icons')
     return images
