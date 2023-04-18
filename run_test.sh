@@ -1,0 +1,1 @@
+python tests/test_paths.py -v

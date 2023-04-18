@@ -4,6 +4,8 @@ import tkinter as tk
 from widgets_handlers import open_file_dialog, play_text, stop_playing, get_path_to_images, pause_playing
 from PIL import ImageTk, Image
 
+import back.session
+
 
 class App:
     win = tk.Tk

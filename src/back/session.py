@@ -20,9 +20,11 @@ class Session:
             words = string.split()
 
             for word in words:
+                global is_paused
                 if is_paused:
                     with paused_cv:
                         paused_cv.wait()
+                    is_paused = False
 
                 if not is_running:
                     mutex.release()

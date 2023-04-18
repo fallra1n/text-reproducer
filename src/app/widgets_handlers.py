@@ -3,7 +3,7 @@ import back.session
 import os
 
 from tkinter import filedialog
-from back.text_reproducer import Run
+from back.text_reproducer import run
 
 last_file_path = ''
 is_new_file = True
@@ -27,7 +27,7 @@ def play_text(paused_cv: threading.Condition) -> None:
         back.session.mutex.acquire()
         back.session.is_paused = False
         back.session.is_running = True
-        t = threading.Thread(target=Run, args=(last_file_path, paused_cv))
+        t = threading.Thread(target=run, args=(last_file_path, paused_cv))
         t.start()
         back.session.mutex.release()
     else:
