@@ -7,7 +7,7 @@ class Session:
     def __init__(self):
         self.engine = pyttsx3.init()
 
-        self.engine.setProperty('rate', 120)
+        self.engine.setProperty('rate', 100)
         self.engine.setProperty('volume', 1.0)
 
     def play(self, text: list) -> None:
