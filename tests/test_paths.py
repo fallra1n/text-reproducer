@@ -7,6 +7,7 @@ sys.path.append(os.path.join(os.getcwd(), 'src/'))
 
 from widgets_handlers import get_path_to_images
 
+
 class TestPathsArea(unittest.TestCase):
 
     def test_path_to_images(self):
