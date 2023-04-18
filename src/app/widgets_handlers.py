@@ -1,11 +1,13 @@
-import threading
-import back.session
+import multiprocessing
 import os
+import signal
 
 from tkinter import filedialog
+
 from back.text_reproducer import run
 
 last_file_path = ''
+last_process_pid = -1
 is_new_file = True
 
 
@@ -16,39 +18,32 @@ def open_file_dialog() -> None:
     is_new_file = True
 
 
-def play_text(paused_cv: threading.Condition) -> None:
+def play_text() -> None:
     if is_new_file:
-        if back.session.is_paused:
-            back.session.is_running = False
-            back.session.mutex.acquire()
-            with paused_cv:
-                paused_cv.notify_all()
+        # если последний процесс еще не убит
+        global last_process_pid
+        if last_process_pid != -1:
+            os.kill(last_process_pid, signal.SIGKILL)
 
-        back.session.mutex.acquire()
-        back.session.is_paused = False
-        back.session.is_running = True
-        t = threading.Thread(target=run, args=(last_file_path, paused_cv))
-        t.start()
-        back.session.mutex.release()
+        new_process = multiprocessing.Process(target=run, args=(last_file_path, ))
+        new_process.start()
+        last_process_pid = new_process.pid
     else:
-        back.session.is_paused = False
-        with paused_cv:
-            paused_cv.notify_all()
+        os.kill(last_process_pid, signal.SIGCONT)
 
 
-def stop_playing(paused_cv: threading.Condition) -> None:
-    back.session.mutex.acquire()
-    back.session.is_running = False
-
-    if back.session.is_paused:
-        with paused_cv:
-            paused_cv.notify_all()
+def stop_playing() -> None:
+    global last_process_pid
+    if last_process_pid != -1:
+        os.kill(last_process_pid, signal.SIGKILL)
+    last_process_pid = -1
 
 
 def pause_playing() -> None:
-    back.session.is_paused = True
     global is_new_file
     is_new_file = False
+    if last_process_pid != -1:
+        os.kill(last_process_pid, signal.SIGSTOP)
 
 
 def get_path_to_images() -> str:
