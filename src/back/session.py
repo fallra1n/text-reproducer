@@ -2,7 +2,7 @@ import pyttsx3
 
 
 class Session:
-    engine = pyttsx3.Engine
+    engine: pyttsx3.Engine
 
     def __init__(self):
         self.engine = pyttsx3.init()
