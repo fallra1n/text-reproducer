@@ -1,4 +1,3 @@
-from widgets_handlers import get_path_to_images
 import unittest
 import os
 import sys
@@ -6,6 +5,7 @@ import sys
 sys.path.append(os.path.join(os.getcwd(), 'src/app'))
 sys.path.append(os.path.join(os.getcwd(), 'src/'))
 
+from widgets_handlers import get_path_to_images
 
 class TestPathsArea(unittest.TestCase):
 
