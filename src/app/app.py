@@ -10,19 +10,16 @@ from widgets_handlers import get_path_to_images
 
 
 class App:
-    win = tk.Tk
-    choose_btn = tk.Button
-    playing_btn = tk.Button
-    stopping_btn = tk.Button
-    back_img = Image.Image
-    play_img = Image.Image
-    stop_img = Image.Image
-    pause_img = Image.Image
-    file_label = tk.Label
+    win = tk.Tk()
+    choose_btn: tk.Button
+    playing_btn: tk.Button
+    stopping_btn: tk.Button
+    back_img: Image.Image
+    play_img: Image.Image
+    stop_img: Image.Image
+    pause_img: Image.Image
+    file_label: tk.Label()
     handlers = WidgetsHandlers()
-
-    def __init__(self):
-        self.win = tk.Tk()
 
     def init_title(self) -> None:
         self.win.title('Text Reproducer')
