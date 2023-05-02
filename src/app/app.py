@@ -5,7 +5,8 @@ import tkinter as tk
 
 from PIL import ImageTk, Image
 
-import widgets_handlers
+from widgets_handlers import WidgetsHandlers
+from widgets_handlers import get_path_to_images
 
 
 class App:
@@ -18,9 +19,11 @@ class App:
     stop_img = Image.Image
     pause_img = Image.Image
     file_label = tk.Label
+    handlers = WidgetsHandlers
 
     def __init__(self):
         self.win = tk.Tk()
+        self.handlers = WidgetsHandlers()
 
     def init_title(self) -> None:
         self.win.title('Text Reproducer')
@@ -33,26 +36,26 @@ class App:
         self.choose_btn = tk.Button(
             self.win,
             text="Выбрать файл",
-            command=lambda: widgets_handlers.open_file_dialog(self.file_label))
+            command=lambda: self.handlers.open_file_dialog(self.file_label))
         self.choose_btn.config(width=11, height=1)
         self.choose_btn.place(x=10, y=220)
 
     def playing_btn_init(self) -> None:
         # play image
         self.play_img = Image.open(
-            widgets_handlers.get_path_to_images() + '/play.jpg')
+            get_path_to_images() + '/play.jpg')
         resized_image = self.play_img.resize((100, 100))
         self.play_img = ImageTk.PhotoImage(resized_image)
 
         # pause image
         self.pause_img = Image.open(
-            widgets_handlers.get_path_to_images() + '/pause.png')
+            get_path_to_images() + '/pause.png')
         resized_image = self.pause_img.resize((100, 100))
         self.pause_img = ImageTk.PhotoImage(resized_image)
 
         self.playing_btn = tk.Button(
             self.win,
-            command=lambda: widgets_handlers.play_text(
+            command=lambda: self.handlers.play_text(
                 self.play_img, self.pause_img, self.playing_btn),
             image=self.play_img,
             bd=0)
@@ -60,13 +63,13 @@ class App:
 
     def stopping_btn_init(self) -> None:
         self.stop_img = Image.open(
-            widgets_handlers.get_path_to_images() + '/stop.png')
+            get_path_to_images() + '/stop.png')
         resized_image = self.stop_img.resize((100, 100))
         self.stop_img = ImageTk.PhotoImage(resized_image)
 
         self.stopping_btn = tk.Button(
             self.win,
-            command=lambda: widgets_handlers.stop_playing(
+            command=lambda: self.handlers.stop_playing(
                 self.play_img, self.pause_img, self.playing_btn, self.file_label),
             image=self.stop_img,
             bd=0)
@@ -74,7 +77,7 @@ class App:
 
     def set_background(self) -> None:
         self.back_img = Image.open(
-            widgets_handlers.get_path_to_images() + '/back.jpg')
+            get_path_to_images() + '/back.jpg')
         resized_image = self.back_img.resize((1120, 700))
         self.back_img = ImageTk.PhotoImage(resized_image)
         label = tk.Label(self.win, image=self.back_img)
@@ -97,5 +100,5 @@ class App:
 
         # Если была пауза, а после остановка(приложения), нам нужно завершить
         # процесс
-        if widgets_handlers.last_process_pid != -1:
-            os.kill(widgets_handlers.last_process_pid, signal.SIGKILL)
+        if self.handlers.last_process_pid != -1:
+            os.kill(self.handlers.last_process_pid, signal.SIGKILL)
