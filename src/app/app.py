@@ -19,11 +19,10 @@ class App:
     stop_img = Image.Image
     pause_img = Image.Image
     file_label = tk.Label
-    handlers = WidgetsHandlers
+    handlers = WidgetsHandlers()
 
     def __init__(self):
         self.win = tk.Tk()
-        self.handlers = WidgetsHandlers()
 
     def init_title(self) -> None:
         self.win.title('Text Reproducer')
